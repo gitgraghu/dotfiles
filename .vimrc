@@ -16,8 +16,14 @@ Bundle 'honza/vim-snippets'
 filetype indent on  "turn indentation on
 filetype plugin on  "enable filetype plugins
 
-syntax on
+" Set extra options when running in GUI mode
+set guioptions-=T
+set guioptions+=e
 set t_Co=256
+set guitablabel=%M\ %t
+
+
+syntax on
 set background=dark
 colorscheme molokai
 
@@ -32,6 +38,7 @@ set expandtab		"tabs are spaces
 set encoding=utf-8
 set showmode
 set showcmd
+set lazyredraw
 set number		    "show line numbers
 set cursorline		"highlight current line
 set backspace=indent,eol,start
@@ -68,7 +75,10 @@ nnoremap <leader>hs :split<CR>
 " TComment remap
 map <leader>c <C-_><C-_>
 
-map t :tabnew<CR>
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
 
 "Let CtrlP show hidden files
 let g:ctrlp_show_hidden=1
