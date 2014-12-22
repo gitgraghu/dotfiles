@@ -3,21 +3,37 @@ set nocompatible        " Use vim and not vi
 " Vundle Setup
 filetype off
 set rtp+=$HOME/.vim/bundle/vundle
-call vundle#rc()
+call vundle#begin()
 
-" Vundle Bundles
-Bundle 'gmarik/vundle'                  
-Bundle 'kien/ctrlp.vim'                 
-Bundle 'vim-scripts/The-NERD-tree'      
-Bundle 'tomasr/molokai'                 
-Bundle 'rstacruz/sparkup'              
-Bundle 'vim-scripts/tComment'          
-Bundle 'scrooloose/syntastic'    
-Bundle 'Valloric/YouCompleteMe'       
-Bundle 'SirVer/ultisnips'              
-Bundle 'honza/vim-snippets'             
-Bundle 'bling/vim-airline'              
-Bundle 'majutsushi/tagbar'
+" Plugins
+Plugin 'gmarik/vundle'
+Plugin 'Yggdroot/indentLine'
+Plugin 'kien/ctrlp.vim'
+Plugin 'vim-scripts/The-NERD-tree'
+Plugin 'rstacruz/sparkup'
+Plugin 'majutsushi/tagbar'
+Plugin 'vim-scripts/Gundo'
+Plugin 'tpope/vim-fugitive'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'godlygeek/tabular'
+Plugin 'Raimondi/delimitMate'
+Plugin 'jlanzarotta/bufexplorer'
+Plugin 'vim-scripts/tComment'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-surround'
+Plugin 'bling/vim-airline'
+Plugin 'scrooloose/syntastic'
+Plugin 'tomasr/molokai'
+Plugin 'flazz/vim-colorschemes'
+
+
+" Plugin 'vim-scripts/OmniCppComplete'
+" Plugin 'mbbill/code_complete'
+" Plugin 'ervandew/supertab'
+" Plugin 'rstacruz/sparkup'
+" Plugin 'davidhalter/jedi-vim'
+
+call vundle#end()
 
 syntax on               " Enable per file type syntax highlighting
 filetype on             " File type detection on
@@ -35,6 +51,7 @@ set ruler               " Always show cursor
 set laststatus=2        " Always show the status line
 set showcmd             " Show incomplete commands
 set showmode
+set hidden              " No need to save on buffer switch
 
 set shiftwidth=4
 set softtabstop=4
@@ -60,8 +77,12 @@ set ignorecase          " Ignore case while searching
 
 set scrolloff=10        " Scroll with more context
 set autoread            " Autoload files that have changed outside of vim
-set paste
+" set paste
 
+set tags=/usr/include/tags
+set tags+=./tags
+
+let mapleader = ","
 " Move by screen lines, not by real lines
 nnoremap j gj
 nnoremap k gk
@@ -73,15 +94,14 @@ vnoremap k gk
 nnoremap / /\v
 vnoremap / /\v
 
-" Faster way to switch from insertion mode
-inoremap ;; <ESC>
-
 " Shortcuts for splits
 nnoremap <leader>s :vsplit<CR>
 nnoremap <leader>hs :split<CR>
 
+nnoremap <leader>x :bd<CR>
+
 " TComment remap
-map <leader>c <C-_><C-_>
+map <leader>/ <C-_><C-_>
 
 " Tabs
 set guitablabel=%M\ %t
@@ -98,12 +118,13 @@ map <silent><C-N> :tabnew<CR>
 map <silent><C-P> :tabp<CR>
 
 " Messages, Info, & Status
-set novisualbell    " No blinking
-set noerrorbells    " No noise
-set cmdheight=2     " Cmd bar 2 rows high
-set showcmd         " Show partial command in the last line of the screen
-set report=0        " : commands always print changed line count
-set shortmess+=a    " Use [+]/[RO]/[w] for modified/readonly/written
+set novisualbell            " No blinking
+set noerrorbells            " No noise
+set t_vb=
+set cmdheight=2             " Cmd bar 2 rows high
+set showcmd                 " Show partial command in the last line of the screen
+set report=0                " : commands always print changed line count
+set shortmess+=a            " Use [+]/[RO]/[w] for modified/readonly/written
 
 let g:ctrlp_show_hidden=1   " Let CtrlP show hidden files
 let g:ctrlp_max_height=30   " Don't let CtrlP take over the screen
@@ -112,5 +133,11 @@ let g:ctrlp_max_height=30   " Don't let CtrlP take over the screen
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'badwolf'
 let g:airline#extensions#tabline#enabled = 1
+
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_no_include_search = 1
+let g:syntastic_cpp_no_default_include_dirs = 1
+let g:syntastic_cpp_auto_refresh_includes = 1
+
 " lets make sure we don't show these files
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store
