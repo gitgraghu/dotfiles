@@ -1,68 +1,74 @@
-;; setup and install packages
+;; Turn off mouse interface early in startup to avoid momentary display
+(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+;; No splash screen
+(setq inhibit-startup-message t)
+
+;; Setup and install packages
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
+;; Initialize packages
 (package-initialize)
-(when (not (file-exists-p package-user-dir)) (package-refresh-contents))
- 
-(defun require-packages (&rest packages) (mapcar (lambda (package) (when (not (package-installed-p package)) (package-install package))) packages))
+(when (not (file-exists-p package-user-dir))
+  (package-refresh-contents))
 
-(require-packages 
-    'evil
-    'autopair
-    'projectile
-    'spacegray-theme
-    'sticky-windows
-    'yasnippet
-    'auto-complete
-    'auto-complete-clang-async
-     )
+(defun require-packages (&rest packages)
+  (mapcar
+    (lambda (package)
+    (when (not (package-installed-p package))
+    (package-install package)))
+    packages))
 
+(require-packages
+        'evil
+        'autopair
+        'projectile
+        'yasnippet
+        'auto-complete
+        'spacegray-theme
+        'dired+
+        'magit)
 
-;;no splash
-(setq inhibit-startup-message t)
-
-;;no toolbar
-(tool-bar-mode -1)
-
-;;no menubar
-(menu-bar-mode -1)
-
-;;set font
+;; Set font
 (set-default-font "Inconsolata 11")
 
-;;no tabs
+;; No tabs
 (setq-default indent-tabs-mode nil)
-(setq-default c-basin-offset 4)
+(setq-default c-basic-offset 4)
 (setq-default tab-width 4)
 
-;;disable text wrapping
+;; Disable text wrapping
 (setq-default truncate-lines t)
 
-;;theme
+;; Color Theme
 (load-theme 'spacegray t)
 (set-face-font 'mode-line "Inconsolata 10")
 
-;;start maximized
-(custom-set-variables '(initial-frame-alist (quote ((fullscreen . maximized)))))
-
-;;show line numbers
+;; Show Line numbers
 (global-linum-mode t)
 
-;;match parenthesis
+;; Match Parenthesis
 (show-paren-mode 1)
 
-;;yasnippet
+;; Set bash as shell program
+(setq shell-file-name "/bin/bash")
+
+(setq make-backup-files nil)
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+(require 'ido)
+(ido-mode t)
+
+(require 'evil)
+(evil-mode 1)
+
 (require 'yasnippet)
 (yas-global-mode 1)
 
-;;sticky windows
-(require 'sticky-windows)
-
-;;set bash as shell program
-(setq shell-file-name "/bin/bash")
-
-;;autocomplete
 (require 'auto-complete)
 (global-auto-complete-mode t)
 (require 'auto-complete-config)
@@ -71,46 +77,23 @@
 (ac-set-trigger-key "TAB")
 (ac-set-trigger-key "<tab>")
 
-;;clang autocomplete
-(require 'auto-complete-clang-async)
-(defun ac-cc-mode-setup ()
-  (setq ac-clang-complete-executable "/usr/bin/clang-complete")
-  (setq ac-sources '(ac-source-clang-async))
-  (ac-clang-launch-completion-process)
-)
-(defun my-ac-config ()
-  (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
-  (add-hook 'auto-complete-mode-hook 'ac-common-setup))
-(my-ac-config)
-
-;;autopair
 (require 'autopair)
 (autopair-global-mode 1)
 (setq autopair-autowrap t)
 
-;;initialize ido
-(require 'ido)
-(ido-mode t)
-
-;;initialize evil
-(require 'evil)
-(evil-mode 1)
-
-;;projectile
 (require 'projectile)
 (projectile-global-mode)
 
-;;dired settings
-;;(require 'dired+)
-;;(diredp-make-find-file-keys-reuse-dirs)
-;;(setq-default dired-omit-files-p t)
-;;(setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
+;;(require 'flymake)
+;;(add-hook 'find-file-hook 'flymake-find-file-hook)
+;;(custom-set-faces '(flymake-errline ((((class color)) (:background "#FF2A2A"))))
+;;                 '(flymake-warnline((((class color)) (:background "#FFFE7F")))))
 
-;;disable linum in some modes
-(setq linum-disabled-modes-list
-      '(eshell-mode
-	wl-summary-mode
-	dired-mode))
+;; dired+ settings
+(require 'dired+)
+(diredp-make-find-file-keys-reuse-dirs)
+(setq-default dired-omit-files-p t)
+(setq dired-omit-files-p t)
+(setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
 
-;;keymaps
-(define-key global-map (kbd "RET") 'newline-and-indent)
+(global-set-key (kbd "RET") 'newline-and-indent)
