@@ -21,7 +21,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'godlygeek/tabular'
 Plugin 'Raimondi/delimitMate'
-Plugin 'jlanzarotta/bufexplorer'
+Plugin 'vim-scripts/QuickBuf'
 Plugin 'vim-scripts/tComment'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-surround'
@@ -29,8 +29,8 @@ Plugin 'bling/vim-airline'
 Plugin 'scrooloose/syntastic'
 Plugin 'tomasr/molokai'
 Plugin 'flazz/vim-colorschemes'
-
-
+Plugin 'derekwyatt/vim-scala'
+Plugin 'KabbAmine/vCoolor.vim'
 " Plugin 'vim-scripts/OmniCppComplete'
 " Plugin 'mbbill/code_complete'
 " Plugin 'ervandew/supertab'
@@ -86,6 +86,9 @@ set autoread            " Autoload files that have changed outside of vim
 set tags=/usr/include/tags
 set tags+=./tags
 
+inoremap jk <Esc>
+inoremap kj <Esc>
+
 let mapleader = ","
 " Move by screen lines, not by real lines
 nnoremap j gj
@@ -93,6 +96,9 @@ nnoremap k gk
 " Also in visual mode
 vnoremap j gj
 vnoremap k gk
+
+" ex mode commands made easy
+nnoremap ; :
 
 " Fix vim regex behaviour
 nnoremap / /\v
@@ -121,6 +127,17 @@ map tc :tabclose<cr>
 map <silent><C-N> :tabnew<CR>
 map <silent><C-P> :tabp<CR>
 
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+inoremap <up> <nop>
+
 " Messages, Info, & Status
 set novisualbell            " No blinking
 set noerrorbells            " No noise
@@ -145,3 +162,6 @@ let g:syntastic_cpp_auto_refresh_includes = 1
 
 " lets make sure we don't show these files
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store
+
+" automatically reload vimrc when it's saved
+au BufWritePost .vimrc so ~/.vimrc

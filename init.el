@@ -9,6 +9,7 @@
 ;; Setup and install packages
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 
 ;; Initialize packages
 (package-initialize)
@@ -30,7 +31,9 @@
         'auto-complete
         'spacegray-theme
         'dired+
-        'magit)
+        'magit
+        'org
+        'org-journal)
 
 ;; Set font
 (set-default-font "Inconsolata 11")
@@ -65,6 +68,7 @@
 
 (require 'evil)
 (evil-mode 1)
+(evil-set-initial-state 'calendar-mode 'emacs)
 
 (require 'yasnippet)
 (yas-global-mode 1)
@@ -96,4 +100,29 @@
 (setq dired-omit-files-p t)
 (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
 
+
+
+
+(require 'org)
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(define-key mode-specific-map [?a] 'org-agenda)
+(setq org-todo-keywords
+      '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE")))
+
 (global-set-key (kbd "RET") 'newline-and-indent)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files (quote ("~/NOTES/Log/life.org"))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+
+(require 'org-journal)
+;;(setq journal-dir "~/Documents/journal/")
