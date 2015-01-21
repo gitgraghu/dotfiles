@@ -2,7 +2,7 @@ set nocompatible        " Use vim and not vi
 
 " Vundle Setup
 filetype off
-set rtp+=$HOME/.vim/bundle/vundle
+set rtp+=$HOME/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Plugins
@@ -31,6 +31,8 @@ Plugin 'tomasr/molokai'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'derekwyatt/vim-scala'
 Plugin 'KabbAmine/vCoolor.vim'
+Plugin 'klen/python-mode'
+Plugin 'jceb/vim-orgmode'
 " Plugin 'vim-scripts/OmniCppComplete'
 " Plugin 'mbbill/code_complete'
 " Plugin 'ervandew/supertab'
@@ -165,3 +167,25 @@ set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store
 
 " automatically reload vimrc when it's saved
 au BufWritePost .vimrc so ~/.vimrc
+
+let g:pymode_rope = 1
+let g:pymode_rope_complete_on_dot = 1
+let g:pymode_rope_lookup_project = 0
+let g:pymode_doc = 1
+let g:pymode_doc_key = 'K'
+
+let g:pymode_lint = 1
+let g:pymode_lint_checkers = ["pyflakes","pep8"]
+
+let g:pymode_lint_write = 1
+let g:pymode_virtualenv = 1
+
+let g:pymode_breakpoint_key = '<leader>b'
+let g:pymode_breakpoint = 1
+
+let g:pymode_syntax = 1
+let g:pymode_syntax_all = 1
+let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+let g:pymode_syntax_space_errors = g:pymode_syntax_all
+
+let g:pymode_folding = 0
